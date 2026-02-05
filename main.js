@@ -252,7 +252,7 @@ var AnkiMediaFixPlugin = class extends import_obsidian.Plugin {
       if (notFoundFiles.length > 0) {
         new ResultModal(this.app, sent, notFound, notFoundFiles).open();
       } else if (missingMedia.size === 0) {
-        new import_obsidian.Notice(`\u2705 No missing media found.`);
+        new import_obsidian.Notice("No missing media found.");
       } else {
         new import_obsidian.Notice(`\u2705 Sync complete! Sent ${sent} missing files to Anki.`);
       }
@@ -359,7 +359,7 @@ var AnkiMediaFixSettingTab = class extends import_obsidian.PluginSettingTab {
   display() {
     const { containerEl } = this;
     containerEl.empty();
-    new import_obsidian.Setting(containerEl).setName("Anki Media Fix settings").setHeading();
+    new import_obsidian.Setting(containerEl).setName("Options").setHeading();
     new import_obsidian.Setting(containerEl).setName("Media folder").setDesc('Primary folder where your media files are stored (e.g., "attachments", "assets"). Leave empty to search entire vault.').addText((text) => text.setPlaceholder("attachments").setValue(this.plugin.settings.mediaFolder).onChange(async (value) => {
       this.plugin.settings.mediaFolder = value;
       await this.plugin.saveSettings();
@@ -373,12 +373,12 @@ var AnkiMediaFixSettingTab = class extends import_obsidian.PluginSettingTab {
     }));
     new import_obsidian.Setting(containerEl).setName("How to use").setHeading();
     const instructions = containerEl.createEl("ol");
-    instructions.createEl("li", { text: "Make sure Anki is running with AnkiConnect addon installed" });
+    instructions.createEl("li", { text: "Make sure Anki is running with the AnkiConnect add-on installed." });
     const commandItem = instructions.createEl("li");
     commandItem.appendText("Use ");
     commandItem.createEl("strong", { text: "Ctrl/Cmd + P" });
     commandItem.appendText(" to open command palette");
-    instructions.createEl("li", { text: 'Search for "Anki Media Fix"' });
+    instructions.createEl("li", { text: 'Search for "Anki media fix".' });
     const listItem = instructions.createEl("li");
     listItem.appendText("Choose one of the commands:");
     const commandList = listItem.createEl("ul");

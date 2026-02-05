@@ -315,7 +315,7 @@ export default class AnkiMediaFixPlugin extends Plugin {
             if (notFoundFiles.length > 0) {
                 new ResultModal(this.app, sent, notFound, notFoundFiles).open();
             } else if (missingMedia.size === 0) {
-                new Notice(`✅ No missing media found.`);
+                new Notice('No missing media found.');
             } else {
                 new Notice(`✅ Sync complete! Sent ${sent} missing files to Anki.`);
             }
@@ -467,7 +467,7 @@ class AnkiMediaFixSettingTab extends PluginSettingTab {
         const { containerEl } = this;
         containerEl.empty();
 
-        new Setting(containerEl).setName('Anki Media Fix settings').setHeading();
+        new Setting(containerEl).setName('Options').setHeading();
 
         new Setting(containerEl)
             .setName('Media folder')
@@ -496,12 +496,12 @@ class AnkiMediaFixSettingTab extends PluginSettingTab {
 
         new Setting(containerEl).setName('How to use').setHeading();
         const instructions = containerEl.createEl('ol');
-        instructions.createEl('li', { text: 'Make sure Anki is running with AnkiConnect addon installed' });
+        instructions.createEl('li', { text: 'Make sure Anki is running with the AnkiConnect add-on installed.' });
         const commandItem = instructions.createEl('li');
         commandItem.appendText('Use ');
         commandItem.createEl('strong', { text: 'Ctrl/Cmd + P' });
         commandItem.appendText(' to open command palette');
-        instructions.createEl('li', { text: 'Search for "Anki Media Fix"' });
+        instructions.createEl('li', { text: 'Search for "Anki media fix".' });
         const listItem = instructions.createEl('li');
         listItem.appendText('Choose one of the commands:');
         const commandList = listItem.createEl('ul');
