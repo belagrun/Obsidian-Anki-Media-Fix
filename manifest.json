@@ -1,7 +1,7 @@
 {
 	"id": "anki-media-fix",
 	"name": "Anki Media Fix",
-	"version": "1.0.4",
+	"version": "1.0.5",
 	"minAppVersion": "0.15.0",
 	"description": "Fix missing images and audio files in your Anki flashcards created by sync plugins.",
 	"author": "Isabela Grunevald",
