@@ -63,20 +63,20 @@ export default class AnkiMediaFixPlugin extends Plugin {
     }
 
     // Invocar API do AnkiConnect
-    async invokeAnkiConnect<T>(action: string, params: Record<string, any> = {}): Promise<T> {
+    async invokeAnkiConnect<T>(action: string, params: Record<string, unknown> = {}): Promise<T> {
         return new Promise((resolve, reject) => {
             const xhr = new XMLHttpRequest();
-            xhr.addEventListener('error', () => reject('Failed to connect to Anki. Is Anki running with AnkiConnect?'));
+            xhr.addEventListener('error', () => reject(new Error('Failed to connect to Anki. Is Anki running with AnkiConnect?')));
             xhr.addEventListener('load', () => {
                 try {
                     const response: AnkiConnectResponse<T> = JSON.parse(xhr.responseText);
                     if (response.error) {
-                        reject(response.error);
+                        reject(new Error(response.error));
                     } else {
                         resolve(response.result);
                     }
                 } catch (e) {
-                    reject(e);
+                    reject(e instanceof Error ? e : new Error(String(e)));
                 }
             });
             xhr.open('POST', `http://127.0.0.1:${ANKI_PORT}`);
@@ -171,7 +171,7 @@ export default class AnkiMediaFixPlugin extends Plugin {
     }
 
     // Encontrar arquivos no Obsidian vault
-    async findFileInVault(filename: string): Promise<TFile | null> {
+    findFileInVault(filename: string): TFile | null {
         const files = this.app.vault.getFiles();
 
         // Buscar pelo nome exato primeiro
@@ -234,7 +234,7 @@ export default class AnkiMediaFixPlugin extends Plugin {
             const adapter = this.app.vault.adapter as FileSystemAdapter;
 
             for (const filename of mediaRefs) {
-                const file = await this.findFileInVault(filename);
+                const file = this.findFileInVault(filename);
                 if (file) {
                     const fullPath = adapter.getFullPath(file.path);
                     const success = await this.sendMediaToAnki(filename, fullPath);
@@ -296,7 +296,7 @@ export default class AnkiMediaFixPlugin extends Plugin {
             const adapter = this.app.vault.adapter as FileSystemAdapter;
 
             for (const filename of missingMedia) {
-                const file = await this.findFileInVault(filename);
+                const file = this.findFileInVault(filename);
                 if (file) {
                     const fullPath = adapter.getFullPath(file.path);
                     const success = await this.sendMediaToAnki(filename, fullPath);
@@ -315,7 +315,7 @@ export default class AnkiMediaFixPlugin extends Plugin {
             if (notFoundFiles.length > 0) {
                 new ResultModal(this.app, sent, notFound, notFoundFiles).open();
             } else if (missingMedia.size === 0) {
-                new Notice(`✅ No missing media found!`);
+                new Notice(`✅ No missing media found.`);
             } else {
                 new Notice(`✅ Sync complete! Sent ${sent} missing files to Anki.`);
             }
@@ -377,20 +377,13 @@ class ResultModal extends Modal {
         const { contentEl } = this;
         contentEl.empty();
 
-        contentEl.createEl('h2', { text: 'Sync Results' });
+        new Setting(contentEl).setName('Sync results').setHeading();
         contentEl.createEl('p', { text: `✅ Sent: ${this.sent} files` });
         contentEl.createEl('p', { text: `⚠️ Not found in vault: ${this.notFound} files` });
 
         if (this.notFoundFiles.length > 0) {
-            contentEl.createEl('h3', { text: 'Files not found:' });
-            const list = contentEl.createEl('div', { cls: 'anki-media-fix-list' });
-            list.style.maxHeight = '300px';
-            list.style.overflow = 'auto';
-            list.style.fontSize = '12px';
-            list.style.fontFamily = 'monospace';
-            list.style.backgroundColor = 'var(--background-secondary)';
-            list.style.padding = '10px';
-            list.style.borderRadius = '5px';
+            new Setting(contentEl).setName('Files not found').setHeading();
+            const list = contentEl.createEl('div', { cls: 'anki-media-fix-list anki-media-fix-list--small' });
 
             for (const file of this.notFoundFiles.slice(0, 100)) {
                 list.createEl('div', { text: file });
@@ -401,9 +394,7 @@ class ResultModal extends Modal {
             }
         }
 
-        const buttonDiv = contentEl.createEl('div', { cls: 'anki-media-fix-buttons' });
-        buttonDiv.style.marginTop = '20px';
-        buttonDiv.style.textAlign = 'right';
+        const buttonDiv = contentEl.createEl('div', { cls: 'anki-media-fix-buttons anki-media-fix-buttons--right' });
 
         const closeBtn = buttonDiv.createEl('button', { text: 'Close' });
         closeBtn.addEventListener('click', () => this.close());
@@ -429,19 +420,11 @@ class MissingMediaModal extends Modal {
         const { contentEl } = this;
         contentEl.empty();
 
-        contentEl.createEl('h2', { text: 'Missing Media in Anki' });
+        new Setting(contentEl).setName('Missing media in Anki').setHeading();
         contentEl.createEl('p', { text: `Found ${this.missingMedia.length} missing files` });
 
         if (this.missingMedia.length > 0) {
-            const list = contentEl.createEl('div', { cls: 'anki-media-fix-list' });
-            list.style.maxHeight = '400px';
-            list.style.overflow = 'auto';
-            list.style.fontSize = '12px';
-            list.style.fontFamily = 'monospace';
-            list.style.backgroundColor = 'var(--background-secondary)';
-            list.style.padding = '10px';
-            list.style.borderRadius = '5px';
-            list.style.marginBottom = '20px';
+            const list = contentEl.createEl('div', { cls: 'anki-media-fix-list anki-media-fix-list--large' });
 
             for (const file of this.missingMedia.slice(0, 200)) {
                 list.createEl('div', { text: file });
@@ -452,18 +435,13 @@ class MissingMediaModal extends Modal {
             }
         }
 
-        const buttonDiv = contentEl.createEl('div', { cls: 'anki-media-fix-buttons' });
-        buttonDiv.style.display = 'flex';
-        buttonDiv.style.justifyContent = 'flex-end';
-        buttonDiv.style.gap = '10px';
+        const buttonDiv = contentEl.createEl('div', { cls: 'anki-media-fix-buttons anki-media-fix-buttons--row' });
 
         if (this.missingMedia.length > 0) {
-            const syncBtn = buttonDiv.createEl('button', { text: 'Sync Missing Files' });
-            syncBtn.style.backgroundColor = 'var(--interactive-accent)';
-            syncBtn.style.color = 'var(--text-on-accent)';
-            syncBtn.addEventListener('click', async () => {
+            const syncBtn = buttonDiv.createEl('button', { text: 'Sync missing files', cls: 'anki-media-fix-button-primary' });
+            syncBtn.addEventListener('click', () => {
                 this.close();
-                await this.plugin.syncMissingMedia();
+                void this.plugin.syncMissingMedia();
             });
         }
 
@@ -489,7 +467,7 @@ class AnkiMediaFixSettingTab extends PluginSettingTab {
         const { containerEl } = this;
         containerEl.empty();
 
-        containerEl.createEl('h2', { text: 'Anki Media Fix Settings' });
+        new Setting(containerEl).setName('Anki Media Fix settings').setHeading();
 
         new Setting(containerEl)
             .setName('Media folder')
@@ -516,21 +494,25 @@ class AnkiMediaFixSettingTab extends PluginSettingTab {
                     }
                 }));
 
-        containerEl.createEl('h3', { text: 'How to use' });
-        const instructions = containerEl.createEl('div');
-        instructions.innerHTML = `
-			<ol>
-				<li>Make sure Anki is running with AnkiConnect addon installed</li>
-				<li>Use <strong>Ctrl/Cmd + P</strong> to open command palette</li>
-				<li>Search for "Anki Media Fix"</li>
-				<li>Choose one of the commands:
-					<ul>
-						<li><strong>Sync all media</strong>: Resends ALL media files referenced in your Anki notes</li>
-						<li><strong>Sync only missing media</strong>: Sends only files that are missing in Anki</li>
-						<li><strong>List missing media</strong>: Shows which files are missing</li>
-					</ul>
-				</li>
-			</ol>
-		`;
+        new Setting(containerEl).setName('How to use').setHeading();
+        const instructions = containerEl.createEl('ol');
+        instructions.createEl('li', { text: 'Make sure Anki is running with AnkiConnect addon installed' });
+        const commandItem = instructions.createEl('li');
+        commandItem.appendText('Use ');
+        commandItem.createEl('strong', { text: 'Ctrl/Cmd + P' });
+        commandItem.appendText(' to open command palette');
+        instructions.createEl('li', { text: 'Search for "Anki Media Fix"' });
+        const listItem = instructions.createEl('li');
+        listItem.appendText('Choose one of the commands:');
+        const commandList = listItem.createEl('ul');
+        const allMedia = commandList.createEl('li');
+        allMedia.createEl('strong', { text: 'Sync all media' });
+        allMedia.appendText(': Resends all media files referenced in your Anki notes');
+        const missingMedia = commandList.createEl('li');
+        missingMedia.createEl('strong', { text: 'Sync only missing media' });
+        missingMedia.appendText(': Sends only files that are missing in Anki');
+        const listMissing = commandList.createEl('li');
+        listMissing.createEl('strong', { text: 'List missing media' });
+        listMissing.appendText(': Shows which files are missing');
     }
 }

@@ -1,0 +1,37 @@
+.anki-media-fix-list {
+	max-height: 300px;
+	overflow: auto;
+	font-size: 12px;
+	font-family: var(--font-monospace, monospace);
+	background: var(--background-secondary);
+	padding: 10px;
+	border-radius: 6px;
+}
+
+.anki-media-fix-list--small {
+	max-height: 300px;
+}
+
+.anki-media-fix-list--large {
+	max-height: 400px;
+	margin-bottom: 20px;
+}
+
+.anki-media-fix-buttons {
+	margin-top: 20px;
+}
+
+.anki-media-fix-buttons--right {
+	text-align: right;
+}
+
+.anki-media-fix-buttons--row {
+	display: flex;
+	justify-content: flex-end;
+	gap: 10px;
+}
+
+.anki-media-fix-button-primary {
+	background-color: var(--interactive-accent);
+	color: var(--text-on-accent);
+}
