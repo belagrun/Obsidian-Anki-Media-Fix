@@ -1,0 +1,63 @@
+# Anki Media Fix
+
+A simple Obsidian plugin that fixes missing images and audio files in your Anki flashcards.
+
+## The Problem
+
+Sometimes images and sounds disappear from your Anki cards. You might see broken image icons or empty spaces where your pictures should be. This happens when Anki loses the media files that your flashcards need.
+
+This plugin solves that problem by finding those files in your Obsidian vault and sending them back to Anki.
+
+## What You Need
+
+1. **Anki** must be open and running
+2. **AnkiConnect** addon must be installed in Anki
+   - Open Anki → Tools → Add-ons → Get Add-ons
+   - Enter code: `2055492159`
+   - Restart Anki
+
+## How to Use
+
+1. Open Anki (keep it running)
+2. In Obsidian, press `Ctrl+P` (or `Cmd+P` on Mac)
+3. Type "Anki Media Fix"
+4. Choose what you want to do:
+
+| Option | What it does |
+|--------|--------------|
+| **Sync only missing media** | Finds and sends only the files that are missing in Anki. This is the fastest option. |
+| **Sync all media** | Sends ALL images and audio files again. Use this if you're not sure what's missing. |
+| **List missing media** | Shows you which files are missing before doing anything. |
+
+## Settings
+
+Go to Settings → Community Plugins → Anki Media Fix:
+
+- **Media folder**: If your images are in a specific folder (like "Attachments" or "Images"), enter it here. Leave empty to search everywhere.
+- **Batch size**: How many cards to check at once. Lower numbers are slower but more stable if you have connection issues.
+
+## Common Questions
+
+**Q: Nothing happens when I run the plugin**  
+A: Make sure Anki is open and AnkiConnect is installed.
+
+**Q: Some files are still missing after sync**  
+A: The plugin can only send files that exist in your Obsidian vault. If a file was deleted, it cannot be recovered.
+
+**Q: Is this safe to use?**  
+A: Yes. This plugin only sends files to Anki. It does not delete or modify anything in Obsidian or Anki.
+
+**Q: Will this affect my Obsidian to Anki plugin?**  
+A: No. This plugin works independently and does not change any settings or data from other plugins.
+
+## Need Help?
+
+If the plugin shows "Failed to connect to Anki":
+1. Check if Anki is running
+2. Check if AnkiConnect addon is enabled in Anki
+3. Restart both Anki and Obsidian
+
+---
+
+Made to fix the annoying "missing media" problem in Anki. 🎴
+

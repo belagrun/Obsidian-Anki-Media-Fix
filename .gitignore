@@ -1,0 +1,23 @@
+# Dependencies
+node_modules/
+
+# Build output (optional - some prefer to commit main.js)
+# main.js
+
+# IDE
+.vscode/
+*.code-workspace
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Logs
+*.log
+npm-debug.log*
+
+# Optional npm cache directory
+.npm
+
+# Optional eslint cache
+.eslintcache

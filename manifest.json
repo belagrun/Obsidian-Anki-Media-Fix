@@ -1,0 +1,10 @@
+{
+	"id": "obsidian-anki-media-fix",
+	"name": "Anki Media Fix",
+	"version": "1.0.0",
+	"minAppVersion": "0.15.0",
+	"description": "Force resync all media files from Obsidian to Anki, fixing missing media issues",
+	"author": "Media Fix Plugin",
+	"authorUrl": "",
+	"isDesktopOnly": true
+}
