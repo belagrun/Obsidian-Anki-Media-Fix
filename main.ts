@@ -467,13 +467,11 @@ class AnkiMediaFixSettingTab extends PluginSettingTab {
         const { containerEl } = this;
         containerEl.empty();
 
-        new Setting(containerEl).setName('Options').setHeading();
-
         new Setting(containerEl)
             .setName('Media folder')
             .setDesc('Primary folder where your media files are stored (e.g., "attachments", "assets"). Leave empty to search entire vault.')
             .addText(text => text
-                .setPlaceholder('attachments')
+                .setPlaceholder('Attachments')
                 .setValue(this.plugin.settings.mediaFolder)
                 .onChange(async (value) => {
                     this.plugin.settings.mediaFolder = value;
@@ -496,7 +494,7 @@ class AnkiMediaFixSettingTab extends PluginSettingTab {
 
         new Setting(containerEl).setName('How to use').setHeading();
         const instructions = containerEl.createEl('ol');
-        instructions.createEl('li', { text: 'Make sure Anki is running with the AnkiConnect add-on installed.' });
+        instructions.createEl('li', { text: 'Make sure Anki is running with the ankiconnect add-on installed.' });
         const commandItem = instructions.createEl('li');
         commandItem.appendText('Use ');
         commandItem.createEl('strong', { text: 'Ctrl/Cmd + P' });
