@@ -15,7 +15,7 @@ Users of the Obsidian to Anki workflow frequently encounter situations where ima
 This plugin provides three commands to fix missing media:
 
 1. **Sync only missing media** - Detects which files are missing and sends only those
-2. **Sync all media** - Force resends all media files referenced in Anki notes  
+2. **Sync all media** - Force resends all media files referenced in Anki notes
 3. **List missing media** - Shows a preview of missing files before syncing
 
 ## How It Works
@@ -75,12 +75,15 @@ This plugin provides three commands to fix missing media:
 ## Screenshots
 
 ### Command Palette
+
 ![Commands](https://github.com/user-attachments/assets/commands-screenshot.png)
 
 ### Sync Progress
+
 ![Progress](https://github.com/user-attachments/assets/progress-screenshot.png)
 
 ### Results Modal
+
 ![Results](https://github.com/user-attachments/assets/results-screenshot.png)
 
 ---

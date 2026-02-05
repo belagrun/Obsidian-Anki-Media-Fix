@@ -21,7 +21,7 @@ Instead of manually re-exporting all notes or hunting down individual files, thi
 ✅ **Vault-Wide Search** - Finds media files anywhere in your Obsidian vault  
 ✅ **Safe Operation** - Only sends files to Anki, never deletes or modifies anything  
 ✅ **Independent** - Works alongside Obsidian to Anki without conflicts  
-✅ **Progress Tracking** - Shows real-time progress during sync  
+✅ **Progress Tracking** - Shows real-time progress during sync
 
 ## Installation
 
