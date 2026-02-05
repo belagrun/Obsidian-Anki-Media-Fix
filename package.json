@@ -1,6 +1,6 @@
 {
 	"name": "anki-media-fix",
-	"version": "1.0.6",
+	"version": "1.0.7",
 	"description": "Force resync all media files from Obsidian to Anki",
 	"main": "main.js",
 	"scripts": {
