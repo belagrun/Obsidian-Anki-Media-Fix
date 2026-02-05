@@ -1,11 +1,11 @@
 {
-	"id": "obsidian-anki-media-fix",
+	"id": "anki-media-fix",
 	"name": "Anki Media Fix",
-	"version": "1.0.3",
+	"version": "1.0.4",
 	"minAppVersion": "0.15.0",
-	"description": "An Obsidian plugin that fixes missing images and audio files in your Anki flashcards created by Obsidian-to-Anki sync plugins.",
+	"description": "Fix missing images and audio files in your Anki flashcards created by sync plugins.",
 	"author": "Isabela Grunevald",
 	"authorUrl": "https://github.com/belagrun",
-    "fundingUrl": "https://github.com/belagrun/Obsidian-Anki-Media-Fix",
+	"fundingUrl": "https://github.com/belagrun/Obsidian-Anki-Media-Fix",
 	"isDesktopOnly": true
 }
